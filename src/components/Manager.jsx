@@ -42,25 +42,26 @@ const Manager = () => {
       form.username.length > 3 &&
       form.password.length > 3
     ) {
-      //If any such id exists in database, delete it
-      await fetch("http://localhost:3000/", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: form.id }),
-      });
-      setpasswordArray([...passwordArray, { ...form, id: uuidv4() }]);
-      // localStorage.setItem(
-      //   "passwords",
-      //   JSON.stringify([...passwordArray, { ...form, id: uuidv4() }])
-      // );
-      // console.log([...passwordArray, form]);
+      if (form.id) {
+        // If an existing entry is being edited, delete it first
+        await fetch("http://localhost:3000/", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: form.id })
+        });
+      }
+
+      const newForm = { ...form, id: uuidv4() }; // Always generate a new ID for the saved entry
+
       await fetch("http://localhost:3000/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, id: uuidv4() }),
+        body: JSON.stringify(newForm),
       });
-      setform({ site: "", username: "", password: "" });
-      toast.success("Password saved !", {
+
+      setpasswordArray([...passwordArray.filter(item => item.id !== form.id), newForm]);
+      setform({ site: "", username: "", password: "", id: "" });
+      toast.success("Password saved!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -71,19 +72,21 @@ const Manager = () => {
         theme: "dark",
       });
     } else {
-      toast.error("Password not saved !");
+      toast.error("Password not saved!");
     }
   };
 
   const editPassword = (id) => {
-    setform({...passwordArray.filter((i) => i.id === id)[0], id: id});
-    setpasswordArray(passwordArray.filter((item) => item.id !== id));
+    const passwordToEdit = passwordArray.find(item => item.id === id);
+    setform(passwordToEdit);
+    setpasswordArray(passwordArray.filter(item => item.id !== id));
   };
+
 
   const deletePassword = async (id) => {
     let c = confirm("Do you really want to delete this password ?");
     if (c) {
-      setpasswordArray(passwordArray.filter((item) => item.id !== id));
+      setpasswordArray(passwordArray.filter(item => item.id !== id));
       // localStorage.setItem(
       //   "passwords",
       //   JSON.stringify(passwordArray.filter((item) => item.id !== id))

@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require('cors')
 
 dotenv.config();
-
+//console.log(process.env.MONGO_URI);
 // Connection URL
 const url = 'mongodb://127.0.0.1:27017';
 const client = new MongoClient(url);
