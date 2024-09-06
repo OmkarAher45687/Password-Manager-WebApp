@@ -8,7 +8,7 @@ The Password Manager allows you to create, edit, and delete passwords effortless
 
 ## Features
 
-- **Password Creation:** Easily generate strong and unique passwords.
+- **Password Creation:** Easily create unique passwords.
 - **Password Editing:** Update and manage your passwords with ease.
 - **Password Deletion:** Remove passwords that are no longer needed.
 - **Secure Clipboard Copying:** Copy passwords securely with user notifications using React Toastify.
