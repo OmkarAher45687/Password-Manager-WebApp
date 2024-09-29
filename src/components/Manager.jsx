@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify"; // For showing notification toasts
 import "react-toastify/dist/ReactToastify.css";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid"; // For generating unique IDs for each password entry
 
 const Manager = () => {
+  // State to manage form input fields for site, username, and password
   const [form, setform] = useState({ site: "", username: "", password: "" });
+  // State to store all passwords fetched from the server
   const [passwordArray, setpasswordArray] = useState([]);
 
+  // Function to fetch passwords from the server using an API call
   const getPasswords = async () => {
     let req = await fetch("http://localhost:3000/");
     let passwords = await req.json();
-    console.log(passwords);
+    //console.log(passwords);
     setpasswordArray(passwords);
   };
 
+  // useEffect hook to fetch passwords on component mount
   useEffect(() => {
     getPasswords();
     // let passwords = localStorage.getItem("passwords");
@@ -47,19 +51,26 @@ const Manager = () => {
         await fetch("http://localhost:3000/", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: form.id })
+          body: JSON.stringify({ id: form.id }),
         });
       }
 
+      // Generate a new ID for the password and prepare new form data
       const newForm = { ...form, id: uuidv4() }; // Always generate a new ID for the saved entry
 
+      // Send the new password to the server
       await fetch("http://localhost:3000/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newForm),
       });
+      // Update the local password array to include the new password entry
+      setpasswordArray([
+        ...passwordArray.filter((item) => item.id !== form.id),
+        newForm,
+      ]);
 
-      setpasswordArray([...passwordArray.filter(item => item.id !== form.id), newForm]);
+      // Reset the form fields after saving
       setform({ site: "", username: "", password: "", id: "" });
       toast.success("Password saved!", {
         position: "top-right",
@@ -77,16 +88,17 @@ const Manager = () => {
   };
 
   const editPassword = (id) => {
-    const passwordToEdit = passwordArray.find(item => item.id === id);
+    const passwordToEdit = passwordArray.find((item) => item.id === id);
     setform(passwordToEdit);
-    setpasswordArray(passwordArray.filter(item => item.id !== id));
+    // Remove it temporarily from the password list
+    setpasswordArray(passwordArray.filter((item) => item.id !== id));
   };
-
 
   const deletePassword = async (id) => {
     let c = confirm("Do you really want to delete this password ?");
     if (c) {
-      setpasswordArray(passwordArray.filter(item => item.id !== id));
+      // Remove the deleted password from the local state
+      setpasswordArray(passwordArray.filter((item) => item.id !== id));
       // localStorage.setItem(
       //   "passwords",
       //   JSON.stringify(passwordArray.filter((item) => item.id !== id))
@@ -110,6 +122,7 @@ const Manager = () => {
     });
   };
 
+  // Function to handle input field changes and update the form state
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   };

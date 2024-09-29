@@ -16,7 +16,9 @@ const Navbar = () => {
             </a>
           </li>
         </ul> */}
-        <button className="text-white bg-green-700  rounded-lg flex justify-between items-center font-bold py-2 px-5 ring-white ring-1">Login</button>
+        <button className="text-white bg-green-700  rounded-lg flex justify-between items-center font-bold py-2 px-5 ring-white ring-1">
+          Login
+        </button>
       </div>
     </nav>
   );

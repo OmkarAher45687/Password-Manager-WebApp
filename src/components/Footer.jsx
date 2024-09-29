@@ -11,7 +11,6 @@ const Footer = () => {
       <div className="flex justify-center items-center mx-2">
         Created with <span className="text-2xl mx-2">🧑🏻‍💻</span> by Omkar_Aher😊
       </div>
-      
     </div>
   );
 };
