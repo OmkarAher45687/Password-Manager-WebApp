@@ -1,8 +1,23 @@
-# React + Vite
+# Password Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+In today's digital age, managing multiple passwords securely is more important than ever. The Password Manager application is designed to simplify and secure your password management process. Built with a modern tech stack including ReactJS, Tailwind CSS, ExpressJS, NodeJS, and MongoDB, this application ensures a seamless user experience while providing robust security for your sensitive information.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The Password Manager allows you to create, edit, and delete passwords effortlessly, with the added convenience of secure clipboard copying and real-time notifications to keep you informed of your actions. Whether you need to generate new passwords or update existing ones, this tool is here to help you manage your credentials with ease and confidence.
+
+## Features
+
+- **Password Creation:** Easily create unique passwords.
+- **Password Editing:** Update and manage your passwords with ease.
+- **Password Deletion:** Remove passwords that are no longer needed.
+- **Secure Clipboard Copying:** Copy passwords securely with user notifications using React Toastify.
+
+## Technologies Used
+
+- **Frontend:** ReactJS, Tailwind CSS
+- **Backend:** ExpressJS, NodeJS
+- **Database:** MongoDB
+- **Notifications:** React Toastify
+
+
